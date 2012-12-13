@@ -1,6 +1,6 @@
 MPBuffs = CreateFrame("Frame")
 MPBuffs.Title = "|cFF00CC33MP Buffs|r"
-MPBuffs.Version = "v1.0"
+MPBuffs.Version = "v1.1"
 MPBuffs.ClassColors = {["DEATHKNIGHT"] = "C41F3B", ["DRUID"] = "FF7D0A", ["HUNTER"] = "ABD473", ["MAGE"] = "69CCF0", ["PALADIN"] = "F58CBA", ["PRIEST"] = "FFFFFF", ["ROGUE"] = "FFF569", ["SHAMAN"] = "0070DE", ["WARLOCK"] = "9482C9", ["WARRIOR"] = "C79C6E"}
 MPBuffs.DebuffTypeColor = {
 	["none"]	= {r = 0.8, g = 0, b = 0},
@@ -10,9 +10,10 @@ MPBuffs.DebuffTypeColor = {
 	["Poison"]	= {r = 0, g = 0.6, b = 0},
 }
 function MPBuffs:Load()
-	MPB_Data = MPB_Data or {
+	MPB_Data = nil or {
 		["ENABLED"] = true, 
 		-- Buff Display options
+		["ICON_SIZE"] = 28,
 		-- Duration
 		["DURATION_SHOWN"] = true,
 		["DURATION_WARNING_TIME"] = 60,
@@ -141,6 +142,11 @@ function MPBuffs:UpdateAura(ButtonName, AuraIndex, Filter)
 	else
 		Buff = self:CreateButton(BuffName)
 		
+		Buff:SetWidth(MPB_Data["ICON_SIZE"])
+		Buff:SetHeight(MPB_Data["ICON_SIZE"])
+		getglobal(BuffName.."Border"):SetWidth(MPB_Data["ICON_SIZE"]+2)
+		getglobal(BuffName.."Border"):SetHeight(MPB_Data["ICON_SIZE"]+2)
+		
 		if Count > 1 then
 			Buff.Overlay.Count:SetText(Count)
 			Buff.Overlay.Count:Show()
@@ -250,7 +256,12 @@ function MPBuffs:CreateButton(ButtonName, Parent)
 	local Button = getglobal(ButtonName)
 	if not Button then
 		Button = CreateFrame("Button", ButtonName, Parent or self.Frame, "DebuffButtonTemplate")
-	
+		
+		Button:SetWidth(MPB_Data["ICON_SIZE"])
+		Button:SetHeight(MPB_Data["ICON_SIZE"])
+		getglobal(ButtonName.."Border"):SetWidth(MPB_Data["ICON_SIZE"]+2)
+		getglobal(ButtonName.."Border"):SetHeight(MPB_Data["ICON_SIZE"]+2)
+		
 		Button.Cooldown = CreateFrame("Cooldown", nil, Button, "CooldownFrameTemplate")
 		Button.Cooldown:SetAllPoints()
 		Button.Cooldown:SetReverse(true)
@@ -325,6 +336,12 @@ function MPBuffs:Enchant_OnUpdate()
 		local EnchantButton = getglobal("MPB_Enchant1")
 		local EnchantButtonBorder = getglobal("MPB_Enchant1Border")
 		local EnchantButtonIcon = getglobal("MPB_Enchant1Icon")
+		
+		EnchantButton:SetWidth(MPB_Data["ICON_SIZE"])
+		EnchantButton:SetHeight(MPB_Data["ICON_SIZE"])
+		EnchantButtonBorder:SetWidth(MPB_Data["ICON_SIZE"]+2)
+		EnchantButtonBorder:SetHeight(MPB_Data["ICON_SIZE"]+2)
+		
 		EnchantButton:SetID(17)
 		
 		EnchantButton.Helpful = true
@@ -336,12 +353,8 @@ function MPBuffs:Enchant_OnUpdate()
 		EnchantButton:SetScript("OnEnter", function(self) if MPB_Data["TOOLTIP_DISPLAY"] then GameTooltip:SetOwner(EnchantButton, "ANCHOR_BOTTOMLEFT") end end)
 		EnchantButton:SetScript("OnLeave", function(self) GameTooltip:Hide() end)
 		
-		if MPB_Data["BORDER_BUFF"] then
-			EnchantButtonBorder:SetVertexColor(0.7, 0, 0.7) --199/255,21/255,133/255
-			EnchantButtonBorder:Show()
-		else
-			EnchantButtonBorder:Hide()
-		end
+		EnchantButtonBorder:SetVertexColor(0.7, 0, 0.7) --199/255,21/255,133/255
+		EnchantButtonBorder:Show()
 		
 		EnchantButton:SetScript("OnClick", function(self, button) if (button == "RightButton") then CancelItemTempEnchantment(2) end end)
 		
@@ -376,6 +389,12 @@ function MPBuffs:Enchant_OnUpdate()
 		local EnchantButton = getglobal("MPB_Enchant"..enchantIndex)
 		local EnchantButtonBorder = getglobal("MPB_Enchant"..enchantIndex.."Border")
 		local EnchantButtonIcon = getglobal("MPB_Enchant"..enchantIndex.."Icon")
+		
+		EnchantButton:SetWidth(MPB_Data["ICON_SIZE"])
+		EnchantButton:SetHeight(MPB_Data["ICON_SIZE"])
+		EnchantButtonBorder:SetWidth(MPB_Data["ICON_SIZE"]+2)
+		EnchantButtonBorder:SetHeight(MPB_Data["ICON_SIZE"]+2)
+		
 		EnchantButton:SetID(16)
 		
 		EnchantButton.Helpful = true
@@ -388,12 +407,8 @@ function MPBuffs:Enchant_OnUpdate()
 		EnchantButton:SetScript("OnLeave", function(self) GameTooltip:Hide() end)
 		
 		
-		if MPB_Data["BORDER_BUFF"] then
-			EnchantButtonBorder:SetVertexColor(0.7, 0, 0.7) --199/255,21/255,133/255
-			EnchantButtonBorder:Show()
-		else
-			EnchantButtonBorder:Hide()
-		end
+		EnchantButtonBorder:SetVertexColor(0.7, 0, 0.7) --199/255,21/255,133/255
+		EnchantButtonBorder:Show()
 		
 		EnchantButton:SetScript("OnClick", function(self, button) if (button == "RightButton") then CancelItemTempEnchantment(1) end end)
 		
@@ -428,8 +443,8 @@ function MPBuffs:Enchant_OnUpdate()
 		getglobal("MPB_Enchant"..i):Hide()
 	end
 	
-	self.EnchantFrame:SetWidth(enchantIndex*32)
-	self.Frame:SetPoint("TOPRIGHT", self.EnchantFrame, "TOPLEFT", -5, 0)
+	self.EnchantFrame:SetWidth(enchantIndex*2)
+	self.Frame:SetPoint("TOPRIGHT", getglobal("MPB_Enchant"..enchantIndex), "TOPLEFT", -5, 0)
 end
 
 function MPBuffs:TimeToString(Time)
@@ -458,11 +473,11 @@ function MPBuffs:UpdateAnchors()
 	for i=1,self.BuffCount do
 		local Buff = getglobal("MPB_Buff"..i)
 		Buff:ClearAllPoints()
-		if i > 1 and mod(i+Enchants,MPB_Data["BUFF_PER_ROW"]) == 1 then -- MPB_Data["BUFF_PER_ROW"] 
+		if i > 1 and mod(i+Enchants, MPB_Data["BUFF_PER_ROW"]) == 1 then -- MPB_Data["BUFF_PER_ROW"] 
 			if i+Enchants == MPB_Data["BUFF_PER_ROW"]+1 then
-				Buff:SetPoint("TOP", self.Enchant1, "BOTTOM", 0, SHOW_BUFF_DURATIONS == "1" and -19 or -6)
+				Buff:SetPoint("TOP", self.Enchant1, "BOTTOM", 0, MPB_Data["DURATION_SHOWN"] and -18 or -6)
 			else
-				Buff:SetPoint("TOP", getglobal("MPB_Buff"..(i-MPB_Data["BUFF_PER_ROW"])), "BOTTOM", 0, SHOW_BUFF_DURATIONS == "1" and -19 or -6)
+				Buff:SetPoint("TOP", getglobal("MPB_Buff"..(i-MPB_Data["BUFF_PER_ROW"])), "BOTTOM", 0, MPB_Data["DURATION_SHOWN"] == "1" and -18 or -6)
 			end
 		elseif i == 1 then
 			Buff:SetPoint("TOPRIGHT", self.Frame, "TOPRIGHT", 0, 0)
@@ -471,19 +486,15 @@ function MPBuffs:UpdateAnchors()
 		end
 	end
 	
-	local rows = ceil((self.BuffCount+Enchants)/MPB_Data["BUFF_PER_ROW"])
+	local Rows = ceil((self.BuffCount+Enchants)/MPB_Data["BUFF_PER_ROW"])
 	
 	for i=1,self.DebuffCount do
 		local Debuff = getglobal("MPB_Debuff"..i)
 		Debuff:ClearAllPoints()
 		if i > 1 and mod(i, MPB_Data["DEBUFF_PER_ROW"]) == 1 then
-			Debuff:SetPoint("TOP", getglobal("MPB_Debuff"..(i-MPB_Data["DEBUFF_PER_ROW"])), "BOTTOM", 0, -15)
+			Debuff:SetPoint("TOP", getglobal("MPB_Debuff"..(i-MPB_Data["DEBUFF_PER_ROW"])), "BOTTOM", 0, MPB_Data["DURATION_SHOWN"] and -18 or -6)
 		elseif i == 1 then
-			if rows < 2 then
-				Debuff:SetPoint("TOPRIGHT", getglobal("MPB_Enchant1"), "BOTTOMRIGHT", 0, -1*((2*15)+30))
-			else
-				Debuff:SetPoint("TOPRIGHT", getglobal("MPB_Enchant1"), "BOTTOMRIGHT", 0, -rows*(15+30))
-			end
+			Debuff:SetPoint("TOPRIGHT", getglobal("MPB_Enchant1"), "TOPRIGHT", 0, -6-Rows*(MPB_Data["ICON_SIZE"]+(MPB_Data["DURATION_SHOWN"] and 18 or 6)))
 		else
 			Debuff:SetPoint("RIGHT", getglobal("MPB_Debuff"..(i-1)), "LEFT", -5, 0)
 		end

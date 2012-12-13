@@ -59,6 +59,7 @@ function MPB_Options:Load()
 	Button:SetPoint("TOPLEFT", 10, -46)
 	Button:SetText("Restore Default Settings")
 	Button:SetScript("OnClick", function(self)
+		MPB_Data["ICON_SIZE"] = 28
 		MPB_Data["DURATION_SHOWN"] = true
 		MPB_Data["DURATION_WARNING_TIME"] = 60
 		MPB_Data["BORDER_BUFF"] = true
@@ -75,6 +76,7 @@ function MPB_Options:Load()
 		MPB_Options:Show()
 	end)
 	
+	--[[
 	Button = CreateFrame("button", "MPB_BTN_MOVE_FRAME", MPB_Options, "UIPanelButtonTemplate")
 	Button:SetHeight(18)
 	Button:SetWidth(180)
@@ -82,6 +84,54 @@ function MPB_Options:Load()
 	Button:SetText("Move Buffs & Debuffs Frame")
 	Button:SetScript("OnClick", nil)
 	Button:Disable()
+	]]
+	
+	Label = MPB_Options:CreateFontString("MPB_FS_ICON_SIZE", "ARTWORK", "GameFontNormal")
+	Label:SetPoint("TOPLEFT", 10, -70)
+	Label:SetTextColor(1,1,1) 
+	Label:SetText("Icon Size:")
+	
+	CheckBox = CreateFrame("CheckButton", "MPB_CB_ICON_SIZE_1", MPB_Options, "UICheckButtonTemplate")
+	CheckBox:SetWidth(20)
+	CheckBox:SetHeight(20)
+	CheckBox:SetPoint("TOPLEFT", "MPB_FS_ICON_SIZE", "TOPLEFT", 56, 3)
+	_G["MPB_CB_ICON_SIZE_1".."Text"]:SetText("28px")
+	CheckBox:SetScript("OnShow",  function(self) self:SetChecked(MPB_Data["ICON_SIZE"] == 28) end)
+	CheckBox:SetScript("OnClick", function(self)
+		for i=1,3 do
+			getglobal("MPB_CB_ICON_SIZE_"..i):SetChecked(false)
+		end
+		self:SetChecked(true)
+		MPB_Data["ICON_SIZE"] = 28
+	end)
+	
+	CheckBox = CreateFrame("CheckButton", "MPB_CB_ICON_SIZE_2", MPB_Options, "UICheckButtonTemplate")
+	CheckBox:SetWidth(20)
+	CheckBox:SetHeight(20)
+	CheckBox:SetPoint("TOPLEFT", "MPB_CB_ICON_SIZE_1", "TOPLEFT", 44, 0)
+	_G["MPB_CB_ICON_SIZE_2".."Text"]:SetText("30px")
+	CheckBox:SetScript("OnShow",  function(self) self:SetChecked(MPB_Data["ICON_SIZE"] == 30) end)
+	CheckBox:SetScript("OnClick", function(self)
+		for i=1,3 do
+			getglobal("MPB_CB_ICON_SIZE_"..i):SetChecked(false)
+		end
+		self:SetChecked(true)
+		MPB_Data["ICON_SIZE"] = 30
+	end)
+	
+	CheckBox = CreateFrame("CheckButton", "MPB_CB_ICON_SIZE_3", MPB_Options, "UICheckButtonTemplate")
+	CheckBox:SetWidth(20)
+	CheckBox:SetHeight(20)
+	CheckBox:SetPoint("TOPLEFT", "MPB_CB_ICON_SIZE_2", "TOPLEFT", 44, 0)
+	_G["MPB_CB_ICON_SIZE_3".."Text"]:SetText("32px")
+	CheckBox:SetScript("OnShow",  function(self) self:SetChecked(MPB_Data["ICON_SIZE"] == 32) end)
+	CheckBox:SetScript("OnClick", function(self)
+		for i=1,3 do
+			getglobal("MPB_CB_ICON_SIZE_"..i):SetChecked(false)
+		end
+		self:SetChecked(true)
+		MPB_Data["ICON_SIZE"] = 32
+	end)
 	
 	CheckBox = CreateFrame("CheckButton", "MPB_CB_BORDER_BUFF_SHOWN", MPB_Options, "UICheckButtonTemplate")
 	CheckBox:SetWidth(20)
