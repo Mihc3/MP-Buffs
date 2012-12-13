@@ -494,7 +494,7 @@ function MPBuffs:UpdateAnchors()
 		if i > 1 and mod(i, MPB_Data["DEBUFF_PER_ROW"]) == 1 then
 			Debuff:SetPoint("TOP", getglobal("MPB_Debuff"..(i-MPB_Data["DEBUFF_PER_ROW"])), "BOTTOM", 0, MPB_Data["DURATION_SHOWN"] and -18 or -6)
 		elseif i == 1 then
-			Debuff:SetPoint("TOPRIGHT", getglobal("MPB_Enchant1"), "TOPRIGHT", 0, -6-Rows*(MPB_Data["ICON_SIZE"]+(MPB_Data["DURATION_SHOWN"] and 18 or 6)))
+			Debuff:SetPoint("TOPRIGHT", getglobal("MPB_Enchant1"), "TOPRIGHT", 0, -6-max(Rows,2)*(MPB_Data["ICON_SIZE"]+(MPB_Data["DURATION_SHOWN"] and 18 or 6)))
 		else
 			Debuff:SetPoint("RIGHT", getglobal("MPB_Debuff"..(i-1)), "LEFT", -5, 0)
 		end
