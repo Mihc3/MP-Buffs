@@ -1,0 +1,124 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+    <Script file="ShamanShields.lua"></Script>
+    <Frame name="ShamanShields" frameStrata="BACKGROUND" movable="true" parent="UIParent" visable="true">
+        <Size>
+            <AbsDimension x="136" y="74" />
+        </Size>
+        <Anchors>
+            <Anchor point="CENTER" relativeTo="WorldFrame" relativePoint="CENTER" />
+        </Anchors>
+        <Layers>
+            <Layer level="BORDER">
+				<Texture name="$parent_MSIcon">
+                    <Size>
+                        <AbsDimension x="30" y="30" />
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="ShamanShields" relativePoint="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="9" y="-36" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+                <Texture name="$parent_ESIcon">
+                    <Size>
+                        <AbsDimension x="30" y="30" />
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parent_MSIcon" relativePoint="BOTTOMLEFT">
+                            <Offset>
+                                <AbsDimension x="0" y="-3" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="ARTWORK">
+				<FontString name="$parent_Title" inherits="GameTooltipTextSmall">
+                    <Anchors>
+                        <Anchor point="TOP" relativeTo="ShamanShields" relativePoint="TOP">
+                            <Offset>
+                                <AbsDimension x="0" y="-7" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString name="$parent_Reincarnation" inherits="GameTooltipTextSmall">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="ShamanShields" relativePoint="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="8" y="-21" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString name="$parent_Cooldown" inherits="GameTooltipTextSmall" justifyh="right">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parent_Reincarnation" relativePoint="TOPRIGHT">
+                            <Offset>
+                                <AbsDimension x="3" y="0" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+				<FontString name="$parent_MSSpell" inherits="GameTooltipTextSmall">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parent_MSIcon" relativePoint="TOPRIGHT">
+                            <Offset>
+                                <AbsDimension x="4" y="-2" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString name="$parent_MSTime" inherits="GameTooltipTextSmall">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parent_MSIcon" relativePoint="TOPRIGHT">
+                            <Offset>
+                                <AbsDimension x="5" y="-14" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+				<FontString name="$parent_ESSpell" inherits="GameTooltipTextSmall">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parent_ESIcon" relativePoint="TOPRIGHT">
+                            <Offset>
+                                <AbsDimension x="4" y="1" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString name="$parent_ESName" inherits="GameTooltipTextSmall">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parent_ESSpell" relativePoint="BOTTOMLEFT">
+                            <Offset>
+                                <AbsDimension x="0" y="-1" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString name="$parent_ESTime" inherits="GameTooltipTextSmall">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parent_ESName" relativePoint="BOTTOMLEFT">
+                            <Offset>
+                                <AbsDimension x="0" y="-1" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnLoad>
+                ShamanShields_OnLoad()
+                self:RegisterForDrag("RightButton")
+            </OnLoad>
+            <OnUpdate>ShamanShields_OnUpdate(self, elapsed)</OnUpdate>
+			<OnEvent>ShamanShields_OnEvent(self, event, ...)</OnEvent>
+            <OnDragStart>self:StartMoving()</OnDragStart>
+            <OnDragStop>self:StopMovingOrSizing()</OnDragStop>
+        </Scripts>
+    </Frame>
+</Ui>

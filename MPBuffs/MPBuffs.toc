@@ -1,0 +1,8 @@
+## Interface: 30300
+## Title: |cFF0070DEMP|r Buffs
+## Notes: Replaces Blizzard buff frame, more options and improvements.
+## Author: Miha Penger
+## SavedVariables: MPB_Data
+
+MPBuffs.lua
+MPBuffs_Options.lua
