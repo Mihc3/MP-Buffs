@@ -477,7 +477,7 @@ function MPBuffs:UpdateAnchors()
 			if i+Enchants == MPB_Data["BUFF_PER_ROW"]+1 then
 				Buff:SetPoint("TOP", self.Enchant1, "BOTTOM", 0, MPB_Data["DURATION_SHOWN"] and -18 or -6)
 			else
-				Buff:SetPoint("TOP", getglobal("MPB_Buff"..(i-MPB_Data["BUFF_PER_ROW"])), "BOTTOM", 0, MPB_Data["DURATION_SHOWN"] == "1" and -18 or -6)
+				Buff:SetPoint("TOP", getglobal("MPB_Buff"..(i-MPB_Data["BUFF_PER_ROW"])), "BOTTOM", 0, MPB_Data["DURATION_SHOWN"] and -18 or -6)
 			end
 		elseif i == 1 then
 			Buff:SetPoint("TOPRIGHT", self.Frame, "TOPRIGHT", 0, 0)
