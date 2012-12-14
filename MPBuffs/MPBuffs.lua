@@ -1,6 +1,6 @@
 MPBuffs = CreateFrame("Frame")
 MPBuffs.Title = "|cFF00CC33MP Buffs|r"
-MPBuffs.Version = "v1.1"
+MPBuffs.Version = "v1.2"
 MPBuffs.ClassColors = {["DEATHKNIGHT"] = "C41F3B", ["DRUID"] = "FF7D0A", ["HUNTER"] = "ABD473", ["MAGE"] = "69CCF0", ["PALADIN"] = "F58CBA", ["PRIEST"] = "FFFFFF", ["ROGUE"] = "FFF569", ["SHAMAN"] = "0070DE", ["WARLOCK"] = "9482C9", ["WARRIOR"] = "C79C6E"}
 MPBuffs.DebuffTypeColor = {
 	["none"]	= {r = 0.8, g = 0, b = 0},
@@ -10,7 +10,7 @@ MPBuffs.DebuffTypeColor = {
 	["Poison"]	= {r = 0, g = 0.6, b = 0},
 }
 function MPBuffs:Load()
-	MPB_Data = nil or {
+	MPB_Data = MPB_Data or {
 		["ENABLED"] = true, 
 		-- Buff Display options
 		["ICON_SIZE"] = 28,
@@ -157,7 +157,7 @@ function MPBuffs:UpdateAura(ButtonName, AuraIndex, Filter)
 		local CasterName, Color
 		if not UnitCaster then
 			CasterName = "Unknown"
-			Color = "FFFFFF"
+			Color = "BEBEBE"
 		elseif UnitCaster == "pet" then
 			CasterName = UnitName("player")
 			Color = self.ClassColors[strupper(select(2,UnitClass("player")))]
@@ -174,7 +174,7 @@ function MPBuffs:UpdateAura(ButtonName, AuraIndex, Filter)
 			Color = self.ClassColors[strupper(select(2,UnitClass(UnitCaster)))]
 		else
 			CasterName = UnitCaster and UnitName(UnitCaster) or nil
-			Color = "FFFFFF"
+			Color = CasterName and "FFFFFF" or "BEBEBE"
 		end
 		Buff.Overlay.Caster:SetText("|cFF"..Color..string.sub(CasterName or "Unknown",1,MPB_Data["CASTER_DISPLAY_LETTERS"]).."|r")
 		if MPB_Data["CASTER_DISPLAY_MODE"] == 3 then
@@ -542,7 +542,7 @@ function MPBuffs:ADDON_LOADED(addon)
 	self:Load()
 	MPB_Options:Load()
 	SLASH_MPBUFFS1 = '/mpb';
-	print("|cFF00CC33MP Buffs|r ("..self.Version..") Loaded!")
+	print("|cFF00CC33MP Buffs|r ("..self.Version..") Loaded! Use /MPB to show the interface.")
 end
 
 MPBuffs:RegisterEvent("ADDON_LOADED")
