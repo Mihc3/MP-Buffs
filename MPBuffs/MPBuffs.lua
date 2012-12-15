@@ -1,6 +1,6 @@
 MPBuffs = CreateFrame("Frame")
 MPBuffs.Title = "|cFF00CC33MP Buffs|r"
-MPBuffs.Version = "v1.2"
+MPBuffs.Version = "v1.3"
 MPBuffs.ClassColors = {["DEATHKNIGHT"] = "C41F3B", ["DRUID"] = "FF7D0A", ["HUNTER"] = "ABD473", ["MAGE"] = "69CCF0", ["PALADIN"] = "F58CBA", ["PRIEST"] = "FFFFFF", ["ROGUE"] = "FFF569", ["SHAMAN"] = "0070DE", ["WARLOCK"] = "9482C9", ["WARRIOR"] = "C79C6E"}
 MPBuffs.DebuffTypeColor = {
 	["none"]	= {r = 0.8, g = 0, b = 0},
@@ -48,13 +48,13 @@ function MPBuffs:Load()
 		["TOOLTIP_DISPLAY"] = true,
 	}
 	
-	self.Frame = CreateFrame("Frame", "MPB_Frame")
+	self.Frame = CreateFrame("Frame", "MPB_Frame", UIParent)
 	self.Frame:SetPoint("TOPRIGHT", -180, -13)
 	self.Frame:SetScript("OnUpdate", function(self, elapsed) if MPB_Data["ENABLED"] then MPBuffs:OnUpdate(self, elapsed) end end)
 	self.Frame:SetWidth(200)
 	self.Frame:SetHeight(32)
 	
-	self.EnchantFrame = CreateFrame("Frame", "MPB_EnchantFrame")
+	self.EnchantFrame = CreateFrame("Frame", "MPB_EnchantFrame", UIParent)
 	self.EnchantFrame:SetPoint("TOPRIGHT", nil, "TOPRIGHT", -180, -13)
 	self.EnchantFrame:SetWidth(36)
 	self.EnchantFrame:SetHeight(36)
