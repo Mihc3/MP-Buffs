@@ -35,6 +35,33 @@ function MPB_Options:Load()
 	Button:SetText("x")
 	Button:SetScript("OnClick", function(self) MPB_Options:Hide() end)
 	
+	Button = CreateFrame("button", "MPB_BTN_RESTORE_DEFAULT_SETTINGS", MPB_Options, "UIPanelButtonTemplate")
+	Button:SetHeight(18)
+	Button:SetWidth(140)
+	Button:SetPoint("TOPLEFT", 8, -8)
+	Button:SetText("Default Settings")
+	Button:SetScript("OnClick", function(self)
+		MPB_Data["ICON_SIZE"] = 28
+		MPB_Data["DURATION_SHOWN"] = true
+		MPB_Data["DURATION_WARNING_TIME"] = 60
+		MPB_Data["BORDER_BUFF"] = true
+		MPB_Data["BORDER_DEBUFF"] = true
+		MPB_Data["CASTER_DISPLAY_MODE"] = 2
+		MPB_Data["CASTER_DISPLAY_LETTERS"] = 4		
+		MPB_Data["COOLDOWN_INDICATOR"] = true
+		MPB_Data["FLASH_EXPIRING_MODE"] = 2
+		MPB_Data["FLASH_EXPIRING_TIME"] = 30
+		MPB_Data["FLASH_EXPIRING_PERIOD"] = 2
+		MPB_Data["FLASH_EXPIRING_MIN_ALPHA"] = 0.2	
+		MPB_Data["TOOLTIP_DISPLAY"] = true
+		
+		MPBuffs.Frame:ClearAllPoints()
+		MPBuffs.Frame:SetPoint("TOPRIGHT", -180, -13)
+		
+		MPB_Options:Hide()
+		MPB_Options:Show()
+	end)
+	
 	-- Enable/disable addon
 	Label = MPB_Options:CreateFontString("MPB_FS_STATUS", "ARTWORK", "GameFontNormal")
 	Label:SetPoint("TOPLEFT", 10, -30)
@@ -57,23 +84,15 @@ function MPB_Options:Load()
 	Button:SetHeight(18)
 	Button:SetWidth(180)
 	Button:SetPoint("TOPLEFT", 10, -46)
-	Button:SetText("Restore Default Settings")
+	Button:SetText("Enable Positioning")
 	Button:SetScript("OnClick", function(self)
-		MPB_Data["ICON_SIZE"] = 28
-		MPB_Data["DURATION_SHOWN"] = true
-		MPB_Data["DURATION_WARNING_TIME"] = 60
-		MPB_Data["BORDER_BUFF"] = true
-		MPB_Data["BORDER_DEBUFF"] = true
-		MPB_Data["CASTER_DISPLAY_MODE"] = 2
-		MPB_Data["CASTER_DISPLAY_LETTERS"] = 4		
-		MPB_Data["COOLDOWN_INDICATOR"] = true
-		MPB_Data["FLASH_EXPIRING_MODE"] = 2
-		MPB_Data["FLASH_EXPIRING_TIME"] = 30
-		MPB_Data["FLASH_EXPIRING_PERIOD"] = 2
-		MPB_Data["FLASH_EXPIRING_MIN_ALPHA"] = 0.2	
-		MPB_Data["TOOLTIP_DISPLAY"] = true
-		MPB_Options:Hide()
-		MPB_Options:Show()
+		if self:GetText() == "Enable Positioning" then
+			self:SetText("Disable Positioning")
+			MPBuffs.Frame:EnableMouse(true)
+		else
+			self:SetText("Enable Positioning")
+			MPBuffs.Frame:EnableMouse(false)
+		end
 	end)
 	
 	--[[

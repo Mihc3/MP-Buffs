@@ -1,6 +1,6 @@
 MPBuffs = CreateFrame("Frame")
 MPBuffs.Title = "|cFF00CC33MP Buffs|r"
-MPBuffs.Version = "v1.4"
+MPBuffs.Version = "v1.5"
 MPBuffs.ClassColors = {["DEATHKNIGHT"] = "C41F3B", ["DRUID"] = "FF7D0A", ["HUNTER"] = "ABD473", ["MAGE"] = "69CCF0", ["PALADIN"] = "F58CBA", ["PRIEST"] = "FFFFFF", ["ROGUE"] = "FFF569", ["SHAMAN"] = "0070DE", ["WARLOCK"] = "9482C9", ["WARRIOR"] = "C79C6E"}
 MPBuffs.DebuffTypeColor = {
 	["none"]	= {r = 0.8, g = 0, b = 0},
@@ -53,11 +53,19 @@ function MPBuffs:Load()
 	self.Frame:SetScript("OnUpdate", function(self, elapsed) if MPB_Data["ENABLED"] then MPBuffs:OnUpdate(self, elapsed) end end)
 	self.Frame:SetWidth(200)
 	self.Frame:SetHeight(32)
+	self.Frame:EnableMouse(true)
+	self.Frame:SetMovable(true)
+	self.Frame:RegisterForDrag("LeftButton")	
+	self.Frame:SetUserPlaced(true)
+	self.Frame:SetScript("OnDragStart", function(self) self:StartMoving() end)
+	self.Frame:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
+	self.Frame:EnableMouse(false)
 	
 	self.EnchantFrame = CreateFrame("Frame", "MPB_EnchantFrame", UIParent)
-	self.EnchantFrame:SetPoint("TOPRIGHT", -180, -13)
+	self.EnchantFrame:SetPoint("TOPRIGHT", self.Frame, "TOPRIGHT", 0, 0)
 	self.EnchantFrame:SetWidth(36)
 	self.EnchantFrame:SetHeight(36)
+	
 	self.Enchant1 = self:CreateButton("MPB_Enchant1", self.EnchantFrame)
 	self.Enchant1:SetPoint("TOPRIGHT", 0, 0)
 	self.Enchant2 = self:CreateButton("MPB_Enchant2", self.EnchantFrame)
@@ -326,7 +334,6 @@ function MPBuffs:Enchant_OnUpdate()
 	if not hasMainHandEnchant and not hasOffHandEnchant then
 		getglobal("MPB_Enchant1"):Hide()
 		getglobal("MPB_Enchant2"):Hide()
-		self.Frame:SetPoint("TOPRIGHT", self.EnchantFrame, "TOPRIGHT", 0, 0)
 		return
 	end
 	
@@ -444,7 +451,6 @@ function MPBuffs:Enchant_OnUpdate()
 	end
 	
 	self.EnchantFrame:SetWidth(enchantIndex*2)
-	self.Frame:SetPoint("TOPRIGHT", getglobal("MPB_Enchant"..enchantIndex), "TOPLEFT", -5, 0)
 end
 
 function MPBuffs:TimeToString(Time)
