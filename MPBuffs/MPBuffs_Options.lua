@@ -37,7 +37,7 @@ function MPB_Options:Load()
 	
 	Button = CreateFrame("button", "MPB_BTN_RESTORE_DEFAULT_SETTINGS", MPB_Options, "UIPanelButtonTemplate")
 	Button:SetHeight(18)
-	Button:SetWidth(140)
+	Button:SetWidth(120)
 	Button:SetPoint("TOPLEFT", 8, -8)
 	Button:SetText("Default Settings")
 	Button:SetScript("OnClick", function(self)
@@ -275,7 +275,7 @@ function MPB_Options:Load()
 	
 	Label = MPB_Options:CreateFontString("MPB_FS_DURATION_WARNING_HINT", "ARTWORK", "GameFontNormal")
 	Label:SetPoint("TOPLEFT", "MPB_FS_DURATION_WARNING", "TOPLEFT", 0, -32) 
-	Label:SetText("|cFFBEBEBE(turns duration text to white color)|r")
+	Label:SetText("|cFFBEBEBE(makes duration text color white)|r")
 	Label:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
 	
 	
